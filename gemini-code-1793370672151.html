@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room on the Broom – Learning Companion</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --card-bg: #ffffff;
+      --accent: #2c5e43;
+      --accent-soft: #eaf3ed;
+      --text: #24292e;
+      --text-muted: #5c6773;
+      --border: #dbe2e6;
+      --success: #2e7d32;
+      --success-bg: #edf7ee;
+      --try-again: #b78103;
+      --try-again-bg: #fff9db;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    h1 { font-size: 1.6rem; color: var(--accent); }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover { background: #f0f2f5; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: #234c36; }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .layout-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    /* Video Frame */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* Navigation / Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Interactive Elements */
+    .activity-intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      background: #f8faf9;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+    }
+
+    /* Checklist / Spotting */
+    .spot-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .spot-list { grid-template-columns: 1fr; }
+    }
+
+    .spot-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      user-select: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .spot-item:hover { border-color: var(--accent); }
+    .spot-item.found {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .spot-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      pointer-events: none;
+    }
+
+    /* Questions */
+    .q-box {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .q-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .opt-btn {
+      text-align: left;
+      padding: 11px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.93rem;
+      color: var(--text);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .opt-btn:hover { background: #f9fbfb; }
+    .opt-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); font-weight: 600; }
+    .opt-btn.incorrect { background: var(--try-again-bg); border-color: var(--try-again); color: #855b00; }
+
+    /* Sequence Ordering */
+    .sequence-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .seq-step {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .seq-arrows {
+      display: flex;
+      gap: 4px;
+    }
+
+    .seq-arrows button {
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      background: #f8f9fa;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    .feedback-box {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+
+    /* Printable Page Styles */
+    @media print {
+      body { background: #fff; padding: 0; color: #000; font-size: 12pt; }
+      header button, .video-section, .nav-tabs, .btn-action, .seq-arrows { display: none !important; }
+      .layout-grid { display: block; }
+      .card { border: none; box-shadow: none; padding: 0; }
+      .tab-content { display: block !important; page-break-after: always; margin-bottom: 30px; }
+      .activity-intro { border-left: 2px solid #000; background: none; }
+      .opt-btn, .spot-item, .seq-step { border: 1px solid #aaa; margin-bottom: 6px; }
+      h2 { margin-top: 20px; font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>Room on the Broom</h1>
+      <p class="subtitle">Storyline Online • Read by Kate Winslet</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="resetProgress()">Clear Saved Progress</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Print Worksheets</button>
+    </div>
+  </header>
+
+  <div class="layout-grid">
+    <!-- Left Column: Reliable Vimeo Video -->
+    <div class="card video-section">
+      <div class="video-container">
+        <iframe 
+          src="https://player.vimeo.com/video/989254388?badge=0&autopause=0&player_id=0&app_id=58479" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+          title="Room on the Broom">
+        </iframe>
+      </div>
+      <p style="margin-top: 14px; font-size: 0.88rem; color: var(--text-muted);">
+        💡 <strong>Parent Note:</strong> Pause whenever you want. You can keep "Watch & Spot" open while watching, or leave the questions for tomorrow.
+      </p>
+    </div>
+
+    <!-- Right Column: Chunked Missions -->
+    <div class="card">
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="showTab('spot', this)">1. Watch & Spot</button>
+        <button class="tab-btn" onclick="showTab('quiz', this)">2. Story Clues</button>
+        <button class="tab-btn" onclick="showTab('sequence', this)">3. Who Joined First?</button>
+        <button class="tab-btn" onclick="showTab('reason', this)">4. Character Detective</button>
+      </nav>
+
+      <!-- TAB 1: Real-time Low Demand Spotting -->
+      <div id="tab-spot" class="tab-content active">
+        <div class="activity-intro">
+          <strong>During the video:</strong> Tap each item as soon as you see or hear it in the story!
+        </div>
+        <div class="spot-list">
+          <div class="spot-item" onclick="toggleSpot(this, 's1')">
+            <input type="checkbox" id="s1"> <span>Tall black hat</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's2')">
+            <input type="checkbox" id="s2"> <span>Long ginger plait</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's3')">
+            <input type="checkbox" id="s3"> <span>Purring black cat</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's4')">
+            <input type="checkbox" id="s4"> <span>Dog with a hat</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's5')">
+            <input type="checkbox" id="s5"> <span>Green bird with a bow</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's6')">
+            <input type="checkbox" id="s6"> <span>Frog in a pond</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's7')">
+            <input type="checkbox" id="s7"> <span>Hungry red dragon</span>
+          </div>
+          <div class="spot-item" onclick="toggleSpot(this, 's8')">
+            <input type="checkbox" id="s8"> <span>Golden cauldron</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Gentle Multiple Choice Recall -->
+      <div id="tab-quiz" class="tab-content">
+        <div class="activity-intro">
+          <strong>Recall:</strong> Pick the best match. Tap your answer to check.
+        </div>
+
+        <div class="q-box" data-id="q1" data-correct="1">
+          <p class="q-title">1. What blew away first in the strong wind?</p>
+          <div class="option-list">
+            <button class="opt-btn" onclick="handleOpt(this, 0)">The witch's magic wand</button>
+            <button class="opt-btn" onclick="handleOpt(this, 1)">The witch's black hat</button>
+            <button class="opt-btn" onclick="handleOpt(this, 2)">The little bow for her plait</button>
+          </div>
+        </div>
+
+        <div class="q-box" data-id="q2" data-correct="2">
+          <p class="q-title">2. Why did the broom suddenly snap in two?</p>
+          <div class="option-list">
+            <button class="opt-btn" onclick="handleOpt(this, 0)">Lightning struck it</button>
+            <button class="opt-btn" onclick="handleOpt(this, 1)">The dragon bit it</button>
+            <button class="opt-btn" onclick="handleOpt(this, 2)">It was too heavy for all the animals</button>
+          </div>
+        </div>
+
+        <div class="q-box" data-id="q3" data-correct="0">
+          <p class="q-title">3. What did the dragon want to eat for dinner?</p>
+          <div class="option-list">
+            <button class="opt-btn" onclick="handleOpt(this, 0)">Witch and chips</button>
+            <button class="opt-btn" onclick="handleOpt(this, 1)">Fish and chips</button>
+            <button class="opt-btn" onclick="handleOpt(this, 2)">A roasted frog</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Narrative Order (Cause & Effect) -->
+      <div id="tab-sequence" class="tab-content">
+        <div class="activity-intro">
+          <strong>Order:</strong> Use the ▲ and ▼ buttons to place the animals in the order they joined the broom.
+        </div>
+        <div class="sequence-container" id="seq-container">
+          <div class="seq-step" data-val="bird">
+            <span>🐦 Green bird (found the plait bow)</span>
+            <div class="seq-arrows">
+              <button onclick="moveStep(this, -1)">▲</button>
+              <button onclick="moveStep(this, 1)">▼</button>
+            </div>
+          </div>
+          <div class="seq-step" data-val="dog">
+            <span>🐶 Brown dog (found the tall hat)</span>
+            <div class="seq-arrows">
+              <button onclick="moveStep(this, -1)">▲</button>
+              <button onclick="moveStep(this, 1)">▼</button>
+            </div>
+          </div>
+          <div class="seq-step" data-val="frog">
+            <span>🐸 Wet frog (found the wand in the pond)</span>
+            <div class="seq-arrows">
+              <button onclick="moveStep(this, -1)">▲</button>
+              <button onclick="moveStep(this, 1)">▼</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-action" style="margin-top: 14px; width: 100%;" onclick="checkSequence()">Check Order</button>
+        <div id="seq-feedback" class="feedback-box"></div>
+      </div>
+
+      <!-- TAB 4: Deeper Comprehension & Inference -->
+      <div id="tab-reason" class="tab-content">
+        <div class="activity-intro">
+          <strong>Detective Questions:</strong> Understanding why things happened.
+        </div>
+        
+        <div class="q-box" data-id="q4" data-correct="1">
+          <p class="q-title">Why did the animals cover themselves in sticky ditch mud?</p>
+          <div class="option-list">
+            <button class="opt-btn" onclick="handleOpt(this, 0)">They were hot and wanted to cool down</button>
+            <button class="opt-btn" onclick="handleOpt(this, 1)">To look like one scary monster and save the witch</button>
+            <button class="opt-btn" onclick="handleOpt(this, 2)">They accidentally fell off the broom into a pond</button>
+          </div>
+        </div>
+
+        <div class="q-box" style="border: none;">
+          <p class="q-title">Talk about it: The New Broom</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">
+            At the end, the witch casts a spell to make a magnificent new broom. It has:
+          </p>
+          <ul style="margin-left: 20px; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">
+            <li>Seats for the witch, cat, and dog</li>
+            <li>A nest for the bird</li>
+            <li>A shower for the clean frog</li>
+          </ul>
+          <p style="font-size: 0.9rem; font-weight: 500;">
+            Prompt: Why did each animal get a special part on the broom? (Did it match what they like?)
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switcher
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Spot Checklist Handler
+  function toggleSpot(item, id) {
+    const cb = document.getElementById(id);
+    cb.checked = !cb.checked;
+    item.classList.toggle('found', cb.checked);
+    saveState();
+  }
+
+  // Question Option Handler
+  function handleOpt(btn, index) {
+    const parent = btn.closest('.q-box');
+    const correctIdx = parseInt(parent.dataset.correct, 10);
+    const buttons = parent.querySelectorAll('.opt-btn');
+
+    buttons.forEach(b => b.classList.remove('correct', 'incorrect'));
+
+    if (index === correctIdx) {
+      btn.classList.add('correct');
+      parent.dataset.answered = 'true';
+    } else {
+      btn.classList.add('incorrect');
+      parent.dataset.answered = 'false';
+    }
+    saveState();
+  }
+
+  // Sequence Ordering Handlers
+  function moveStep(btn, direction) {
+    const row = btn.closest('.seq-step');
+    const container = document.getElementById('seq-container');
+    if (direction === -1 && row.previousElementSibling) {
+      container.insertBefore(row, row.previousElementSibling);
+    } else if (direction === 1 && row.nextElementSibling) {
+      container.insertBefore(row.nextElementSibling, row);
+    }
+    document.getElementById('seq-feedback').style.display = 'none';
+    saveState();
+  }
+
+  function checkSequence() {
+    const steps = Array.from(document.querySelectorAll('.seq-step')).map(s => s.dataset.val);
+    const feedback = document.getElementById('seq-feedback');
+    feedback.style.display = 'block';
+
+    // Correct order: dog -> bird -> frog
+    if (steps[0] === 'dog' && steps[1] === 'bird' && steps[2] === 'frog') {
+      feedback.style.background = 'var(--success-bg)';
+      feedback.style.color = 'var(--success)';
+      feedback.textContent = '🌟 Spot on! Dog found the hat first, then Bird found the bow, then Frog found the wand.';
+    } else {
+      feedback.style.background = 'var(--try-again-bg)';
+      feedback.style.color = 'var(--try-again)';
+      feedback.textContent = 'Not quite in the right order yet. Who helped find the tall hat first?';
+    }
+  }
+
+  // Persistence (localStorage)
+  function saveState() {
+    const state = {
+      spots: {},
+      quiz: {}
+    };
+    document.querySelectorAll('.spot-item input').forEach(input => {
+      state.spots[input.id] = input.checked;
+    });
+    document.querySelectorAll('.q-box[data-id]').forEach(q => {
+      const selected = Array.from(q.querySelectorAll('.opt-btn')).findIndex(b => b.classList.contains('correct') || b.classList.contains('incorrect'));
+      if (selected !== -1) {
+        state.quiz[q.dataset.id] = {
+          idx: selected,
+          isCorrect: q.querySelectorAll('.opt-btn')[selected].classList.contains('correct')
+        };
+      }
+    });
+    localStorage.setItem('broom_companion_save', JSON.stringify(state));
+  }
+
+  function loadState() {
+    const raw = localStorage.getItem('broom_companion_save');
+    if (!raw) return;
+    try {
+      const state = JSON.parse(raw);
+      if (state.spots) {
+        Object.entries(state.spots).forEach(([id, checked]) => {
+          const input = document.getElementById(id);
+          if (input && checked) {
+            input.checked = true;
+            input.closest('.spot-item').classList.add('found');
+          }
+        });
+      }
+      if (state.quiz) {
+        Object.entries(state.quiz).forEach(([qid, data]) => {
+          const q = document.querySelector(`.q-box[data-id="${qid}"]`);
+          if (q) {
+            const btn = q.querySelectorAll('.opt-btn')[data.idx];
+            if (btn) btn.classList.add(data.isCorrect ? 'correct' : 'incorrect');
+          }
+        });
+      }
+    } catch(e) {}
+  }
+
+  function resetProgress() {
+    if (confirm('Clear all saved checkmarks and quiz answers for this story?')) {
+      localStorage.removeItem('broom_companion_save');
+      location.reload();
+    }
+  }
+
+  // Init
+  loadState();
+</script>
+
+</body>
+</html>
